@@ -1,4 +1,4 @@
-#Vaultify
+Vaultify
 
 This Vaultify allows users to generate, store, and retrieve passwords in an encrypted manner for various websites. The application is safeguarded by a Master Password, and the stored data is encrypted using Fernet (symmetrical encryption) to bolster security. For increased privacy, once mysteriously going into hiding, the password file is kept hidden from the file system on Windows after every small modification.
 
