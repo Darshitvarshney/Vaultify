@@ -3,6 +3,8 @@ from datetime import datetime
 from cryptography.fernet import Fernet
 import os
 import smtplib
+from dotenv import load_dotenv
+from email.message import EmailMessage
 
 
 def MY_First_Project():
@@ -177,21 +179,42 @@ def MY_First_Project():
                 else:
                     print('wrong otp')
                     end_ask()
-                                        
+            
+
+
     def otp(re_mail):
         otp = str(random.randint(100000, 999999))
-       
+        load_dotenv()
+        # email = os.getenv("EMAIL_SENDER")  
+        # Best: Use environment variables instead of hardcoding
+        sender_email = os.getenv("EMAIL_SENDER")
+        sender_password = os.getenv("EMAIL_PASSWORD")
 
-        sender_email = "darshitvarshney1928@gmail.com"
-        sender_password = "ntbq nolh ryqv xnyk"   
-        receiver_email = re_mail
+        if not sender_email or not sender_password:
+            raise ValueError("Missing environment variables for email credentials.")
 
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.starttls()
-        server.login(sender_email, sender_password)
-        server.sendmail(sender_email, receiver_email, f"Subject: Login \n\n Thank You For Trusting Vaultify For Keeping Your Password Safe. For Continue , Your OTP Is  {otp}")
-        server.quit()
+        # Email content setup
+        msg = EmailMessage()
+        msg["Subject"] = "Vaultify OTP Verification"
+        msg["From"] = sender_email
+        msg["To"] = re_mail
+        msg.set_content(f"""\
+    Thank you for using Vaultify! 
+
+    Your OTP is: {otp}
+
+    This OTP is valid for 5 minutes.
+    Do not share it with anyone.
+    """)
+
+        # Send Email
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.send_message(msg)
+
         return otp
+
 
     def project():
         print('Welcome to My Vaultify')
