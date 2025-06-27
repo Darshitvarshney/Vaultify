@@ -189,19 +189,19 @@ def MY_First_Project():
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
         server.login(sender_email, sender_password)
-        server.sendmail(sender_email, receiver_email, f"Subject: Your OTP\n\nYour OTP is {otp}")
+        server.sendmail(sender_email, receiver_email, f"Subject: Login \n\n Thank You For Trusting Vaultify For Keeping Your Password Safe. For Continue , Your OTP Is  {otp}")
         server.quit()
         return otp
 
     def project():
-        print('Welcome to My Password Manager')
+        print('Welcome to My Vaultify')
         if os.path.exists('Password_generate.txt'):
             master = input('Enter Master Password: ')
             main(master)
         else:
             re_mail = input('Enter Your email---')
             otp_temp = otp(re_mail)
-            otp_check = input(f'Enter otp Send to {re_mail}:')
+            otp_check = input(f'Enter otp Send to you on {re_mail}:')
             if otp_check == otp_temp:
                 master = input('Create a Master Password: ')
 
